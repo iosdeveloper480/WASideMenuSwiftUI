@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "WASideMenuSwiftUI",
+        "repositoryURL": "https://github.com/iosdeveloper480/WASideMenuSwiftUI.git",
+        "state": {
+          "branch": null,
+          "revision": "3a7d12c637ec13ec404dcb640e75056c778c670c",
+          "version": "1.0.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
