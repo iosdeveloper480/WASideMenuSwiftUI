@@ -21,4 +21,13 @@ class WAObservableObject: ObservableObject {
     @Published var backButtonColor: Color = .black
     
     @Published var menuWidth: CGFloat = 250.0
+    
+    @Published var statusBarHidden = false
+    @Published var isEnableScaling = false
+    @Published var scaling: CGFloat = 1
+    
+    @Published var shadowColor: Color = .gray
+    @Published var shadowRadius: CGFloat = 10
+    @Published var shadowX: CGFloat = 0
+    @Published var shadowY: CGFloat = 0
 }

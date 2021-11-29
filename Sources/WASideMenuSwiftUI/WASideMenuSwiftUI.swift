@@ -11,7 +11,7 @@ import SwiftUI
 public struct WASideMenuSwiftUI: View {
     
     @Binding public var showingMenu: Bool
-    
+    @State private var scale: CGFloat = 1
     public init(showingMenu: Binding<Bool>) {
         self._showingMenu = showingMenu
     }
@@ -30,6 +30,11 @@ public struct WASideMenuSwiftUI: View {
                             Button(action: {
                                 withAnimation {
                                     self.showingMenu.toggle()
+                                    if scale == 1 {
+                                        scale = notifier.scaling
+                                    }else {
+                                        scale = 1
+                                    }
                                 }
                             }) {
                                 if notifier.leftMenuButton == nil {
@@ -46,7 +51,10 @@ public struct WASideMenuSwiftUI: View {
             }
             .accentColor(notifier.backButtonColor)
             .offset(x: showingMenu ? notifier.menuWidth : 0.0, y: 0)
+            .shadow(color: notifier.shadowColor, radius: notifier.shadowRadius, x: notifier.shadowX, y: notifier.shadowY)
             .zIndex(1)
+            .scaleEffect(notifier.isEnableScaling ? scale : 1)
+            .statusBar(hidden: notifier.statusBarHidden ? showingMenu : notifier.statusBarHidden)
             notifier.leftMenuView
         }
     }
@@ -95,6 +103,37 @@ extension WASideMenuSwiftUI {
     /// Custom Left Menu Button
     public func lefMenuButton<LeftMenuButton: View>(@ViewBuilder _ view: @escaping () -> LeftMenuButton) -> Self {
         notifier.leftMenuButton = AnyView(view())
+        return self
+    }
+    
+    /// menu shadow
+    public func frontViewShadow(color: Color, radius: CGFloat, x: CGFloat, y: CGFloat) -> Self {
+        notifier.shadowColor = color
+        notifier.shadowRadius = radius
+        notifier.shadowX = x
+        notifier.shadowY = y
+        return self
+    }
+    
+    public func removeShadow(_ remove: Bool) -> Self {
+        notifier.shadowRadius = remove ? 0 : notifier.shadowRadius
+        return self
+    }
+    
+    public func setStatusBarHidden(_ hidden: Bool) -> Self {
+        notifier.statusBarHidden = hidden
+        return self
+    }
+    
+    ///// If scaling is enabled then you can also give custom value of the scaling
+    public func setScale(_ scale: CGFloat) -> Self {
+        notifier.scaling = scale
+        return self
+    }
+    
+    /// Enable or Disable scaling
+    public func isEnableScaling(_ enable: Bool) -> Self {
+        notifier.isEnableScaling = enable
         return self
     }
 }
