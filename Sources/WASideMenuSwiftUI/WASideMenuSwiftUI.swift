@@ -32,10 +32,14 @@ public struct WASideMenuSwiftUI: View {
                                     self.showingMenu.toggle()
                                 }
                             }) {
-                                Image(systemName: "line.horizontal.3")
-                                    .resizable()
-                                    .foregroundColor(notifier.menuTintColor)
-                                    .frame(width: 28, height: 18, alignment: .center)
+                                if notifier.leftMenuButton == nil {
+                                    Image(systemName: "line.horizontal.3")
+                                        .resizable()
+                                        .foregroundColor(notifier.menuTintColor)
+                                        .frame(width: 28, height: 18, alignment: .center)
+                                } else {
+                                    notifier.leftMenuButton
+                                }
                             }
                         }
                     }
@@ -85,6 +89,12 @@ extension WASideMenuSwiftUI {
     /// Default width is 250
     public func menuWidth(_ menuWidth: CGFloat) -> Self {
         notifier.menuWidth = menuWidth
+        return self
+    }
+    
+    /// Custom Left Menu Button
+    public func lefMenuButton<LeftMenuButton: View>(@ViewBuilder _ view: @escaping () -> LeftMenuButton) -> Self {
+        notifier.leftMenuButton = AnyView(view())
         return self
     }
 }

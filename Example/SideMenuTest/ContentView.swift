@@ -15,7 +15,6 @@ struct ContentView: View {
     @State private var title = ""
     
     var body: some View {
-//        Text("aaa")
         WASideMenuSwiftUI(showingMenu: $showingMenu)
             .frontView {
                 switch selectedIndex {

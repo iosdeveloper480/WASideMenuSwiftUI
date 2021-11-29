@@ -10,8 +10,10 @@ import SwiftUI
 @available(iOS 13.0, *)
 class WAObservableObject: ObservableObject {
     
-    @Published var frontView: AnyView? = nil
-    @Published var leftMenuView: AnyView? = nil
+    @Published var frontView: AnyView?
+    @Published var leftMenuView: AnyView?
+    
+    @Published var leftMenuButton: AnyView? = nil
     
     @Published var title: String = ""
     
