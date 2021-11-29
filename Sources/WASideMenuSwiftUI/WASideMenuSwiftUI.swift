@@ -11,7 +11,7 @@ import SwiftUI
 public struct WASideMenuSwiftUI: View {
     
     @Binding public var showingMenu: Bool
-    @State private var scale: CGFloat = 1
+    
     public init(showingMenu: Binding<Bool>) {
         self._showingMenu = showingMenu
     }
@@ -30,11 +30,6 @@ public struct WASideMenuSwiftUI: View {
                             Button(action: {
                                 withAnimation {
                                     self.showingMenu.toggle()
-                                    if scale == 1 {
-                                        scale = notifier.scaling
-                                    }else {
-                                        scale = 1
-                                    }
                                 }
                             }) {
                                 if notifier.leftMenuButton == nil {
@@ -53,7 +48,7 @@ public struct WASideMenuSwiftUI: View {
             .offset(x: showingMenu ? notifier.menuWidth : 0.0, y: 0)
             .shadow(color: notifier.shadowColor, radius: notifier.shadowRadius, x: notifier.shadowX, y: notifier.shadowY)
             .zIndex(1)
-            .scaleEffect(notifier.isEnableScaling ? scale : 1)
+            .scaleEffect(notifier.isEnableScaling ? (showingMenu ? notifier.scaling : 1) : 1)
             .statusBar(hidden: notifier.statusBarHidden ? showingMenu : notifier.statusBarHidden)
             notifier.leftMenuView
         }
@@ -115,11 +110,13 @@ extension WASideMenuSwiftUI {
         return self
     }
     
+    //// You can remove shadow of the left menu
     public func removeShadow(_ remove: Bool) -> Self {
         notifier.shadowRadius = remove ? 0 : notifier.shadowRadius
         return self
     }
     
+    /////
     public func setStatusBarHidden(_ hidden: Bool) -> Self {
         notifier.statusBarHidden = hidden
         return self
